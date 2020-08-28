@@ -1,5 +1,6 @@
 {
   "resources": [
+    {"id":{"name":"obj_demo_seeker","path":"objects/obj_demo_seeker/obj_demo_seeker.yy",},"order":2,},
     {"id":{"name":"obj_demo","path":"objects/obj_demo/obj_demo.yy",},"order":1,},
     {"id":{"name":"struct_alarms_scritp_file","path":"scripts/struct_alarms_scritp_file/struct_alarms_scritp_file.yy",},"order":0,},
     {"id":{"name":"rm_demo","path":"rooms/rm_demo/rm_demo.yy",},"order":0,},

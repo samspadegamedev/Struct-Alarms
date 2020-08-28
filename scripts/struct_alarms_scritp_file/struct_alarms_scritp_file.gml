@@ -33,7 +33,8 @@ function struct_alarm(_default_timer, _func) constructor {
     }
     
     static update = function() {
-        timer -= 1;
+        if (timer < 0) exit;
+        timer -= argument_count == 1 ? argument[0] : 1;
         if (timer <= 0) && (!triggered) trigger();
     }
     
