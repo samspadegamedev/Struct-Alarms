@@ -26,7 +26,6 @@ Additional alarm functions
 * set  (set the alarm to the default timer value)
 * set_default_timer (set the default timer to a value)
 * set_function (set the function that runs when the alarm is triggered)
-* trigger (triggers the alarm - fires automatically when the alarm goes off, but can also be triggered directly)
 * update (runs the alarm - can be passed the value to run by)
 
 ### Alarm Sets
