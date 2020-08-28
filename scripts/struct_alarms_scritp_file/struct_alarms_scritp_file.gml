@@ -26,16 +26,14 @@ function struct_alarm(_default_timer, _func) constructor {
     static set_function = function(_func) {
         my_func = _func;
     }
-    
-    static trigger = function() {
-        triggered = true;
-        my_func();
-    }
-    
+        
     static update = function() {
         if (timer < 0) exit;
         timer -= argument_count == 1 ? argument[0] : 1;
-        if (timer <= 0) && (!triggered) trigger();
+        if (timer <= 0) && (!triggered) {
+            triggered = true;
+            my_func();        
+        } 
     }
     
 }
@@ -72,8 +70,9 @@ function alarm_set() constructor {
     }
 
     static update = function() {
+        var _value = argument_count == 1 ? argument[0] : 1;
         for (var i = 0; i < alarm_amount; i += 1) {
-            alarm_array[i].update();
+            alarm_array[i].update(_value);
         }
     }
 
