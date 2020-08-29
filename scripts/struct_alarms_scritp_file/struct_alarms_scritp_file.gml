@@ -1,22 +1,31 @@
 // Struct Alarm Script File
 
 
-function struct_alarm(_default_timer, _func) constructor {
-    
+/// @function alarm_struct(default_timer, function)
+/// @param {real}                       default_timer a number greater than zero
+/// @param {function} function          what the alarm will do when it goes off
+/// @description creates a struct based alarm, can take 0 or 2 starting arguments
+function alarm_struct(_default_timer, _func) constructor {
+        
     timer = 0;
+    active = false;
     
-    default_timer = _default_timer;
-    my_func = _func;
-    triggered = false;
-    
+    if (argument_count == 2) { 
+        default_timer = _default_timer;
+        my_func = _func;    
+    } else {
+        default_timer = 0;
+        my_func = function() {show_debug_message("No function set for this alarm");}
+    }
+
     static set_to = function(_value) {
         timer = _value;
-        triggered = false;
+        active = true;
     }
     
     static set = function() {
         timer = default_timer;
-        triggered = false;
+        active = true;
     }
     
     static set_default_timer = function(_value) {
@@ -26,19 +35,26 @@ function struct_alarm(_default_timer, _func) constructor {
     static set_function = function(_func) {
         my_func = _func;
     }
-        
-    static update = function() {
+
+    static trigger = function() {
+        my_func(); 
+    }
+
+    static run = function() {
         if (timer < 0) exit;
         timer -= argument_count == 1 ? argument[0] : 1;
-        if (timer <= 0) && (!triggered) {
-            triggered = true;
-            my_func();        
+        if (timer <= 0) && (active) {
+            active = false;
+            trigger();       
         } 
     }
     
 }
 
-function alarm_set() constructor {
+
+/// @function alarm_group()
+/// @description creates an empty alarm group, alarm groups can be used to run groups of alarms together
+function alarm_group() constructor {
 
     alarm_amount = 0;
     alarm_array = [];
@@ -67,12 +83,13 @@ function alarm_set() constructor {
             alarm_array = _new_array;
         }
         alarm_amount--;
+        return _alarm;
     }
 
-    static update = function() {
+    static run = function() {
         var _value = argument_count == 1 ? argument[0] : 1;
         for (var i = 0; i < alarm_amount; i += 1) {
-            alarm_array[i].update(_value);
+            alarm_array[i].run(_value);
         }
     }
 

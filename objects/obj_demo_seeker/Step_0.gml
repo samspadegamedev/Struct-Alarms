@@ -1,4 +1,7 @@
-/// @description Seeker
+/// @description Demo Seeker
 
 
-change_direction_timer.update();
+
+if (keyboard_check_pressed(vk_space)) change_direction_timer.trigger();
+
+change_direction_timer.run();

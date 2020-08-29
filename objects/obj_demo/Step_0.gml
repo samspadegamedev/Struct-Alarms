@@ -1,8 +1,9 @@
 /// @description Demo
 
 
-//my_hello.update();
-//my_goodbye.update();
+//my_hello_alarm.run(2);
+//my_goodbye_alarm.run(3);
 
-my_alarm_set.update();
+my_alarm_group.run();
 
+if (keyboard_check_pressed(vk_space)) my_goodbye_alarm.trigger();
