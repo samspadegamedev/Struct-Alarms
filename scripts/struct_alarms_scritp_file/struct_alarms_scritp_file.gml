@@ -18,8 +18,8 @@ function alarm_struct(_default_timer, _func) constructor {
         my_func = function() {show_debug_message("No function set for this alarm");}
     }
 
-    static set_to = function(_value) {
-        timer = _value;
+    static set = function(_value) {
+        timer = argument_count == 1 ? argument[0] : default_timer;
         active = true;
     }
     
@@ -28,18 +28,6 @@ function alarm_struct(_default_timer, _func) constructor {
         active = true;
     }
     
-    static set_default_timer = function(_value) {
-        default_timer = _value;
-    }
-     
-    static set_function = function(_func) {
-        my_func = _func;
-    }
-
-    static trigger = function() {
-        my_func(); 
-    }
-
     static run = function() {
         if (timer < 0) exit;
         timer -= argument_count == 1 ? argument[0] : 1;
