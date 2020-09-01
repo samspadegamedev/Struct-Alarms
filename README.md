@@ -22,11 +22,10 @@ To **use** an alarm call the alarm's update function (generally in a step event,
 my_hello_alarm.update();
 ```
 Additional alarm functions
-* set_to (set an alarm directly to a value)
-* set  (set the alarm to the default timer value)
-* set_default_timer (set the default timer to a value)
-* set_function (set the function that runs when the alarm is triggered)
-* update (runs the alarm - can be passed the value to run by)
+* set  (set the alarm to the default timer value or to the value provided)
+* run (runs the alarm - can be passed the value to run by)
+* is_active (returns true or false based on whether the alarm is active)
+* cancel (cancels the alarm)
 
 ### Alarm Sets
 There are three basic things you can do with an alarm set, add alarms to it, remove alarms from it, and run the update function for each alarm. 
@@ -39,7 +38,7 @@ my_alarm_set = new alarm_set();
 my_alarm_set.add_alarm(my_hello_alarm);
 
 //update all alarms in a set
-my_alarm_set.update();
+my_alarm_set.run();
 
 //remove an alarm (does not delete the alarm)
 my_alarm_set.remove_alarm(my_hello_alarm);
