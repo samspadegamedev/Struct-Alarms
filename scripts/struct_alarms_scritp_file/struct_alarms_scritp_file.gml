@@ -1,40 +1,49 @@
 // Struct Alarm Script File
 
 
-/// @function alarm_struct(default_timer, function)
-/// @param {real}                       default_timer a number greater than zero
+/// @function alarm_struct(default_start_time, function)
+/// @param {real} default_start_time         a number greater than zero
 /// @param {function} function          what the alarm will do when it goes off
 /// @description creates a struct based alarm, can take 0 or 2 starting arguments
 function alarm_struct(_default_timer, _func) constructor {
-        
-    timer = 0;
-    active = false;
-    
-    if (argument_count == 2) { 
-        default_timer = _default_timer;
-        my_func = _func;    
-    } else {
-        default_timer = 0;
-        my_func = function() {show_debug_message("No function set for this alarm");}
+
+    time_remaining = 0;
+    default_start_time = 0;                  
+    alarm_event = function() {
+        show_debug_message("No function set for this alarm");
     }
 
-    static set = function(_value) {
-        timer = argument_count == 1 ? argument[0] : default_timer;
-        active = true;
+    //set the default_start_time and alarm_event variables if the optional arguments are provided
+if (argument_count == 2) { 
+        default_start_time = _default_timer;
+        alarm_event = _func;    
+    } 
+
+    static set_default_start_time = function(_value) {
+        default_start_time = _value;
     }
-    
+   
+    static is_active = function() {
+        return time_remaining > 0 ? true : false;
+    }
+
+    //set alarm to the specified value or to the of default_start_time if no value is given
     static set = function() {
-        timer = default_timer;
-        active = true;
+        time_remaining = argument_count == 1 ? argument[0] : default_start_time;
     }
-    
+
+    static cancel = function() {
+        time_remaining = 0;
+    }
+
+    //run the alarm by counting down by the value given or 1 if no value is given
     static run = function() {
-        if (timer < 0) exit;
-        timer -= argument_count == 1 ? argument[0] : 1;
-        if (timer <= 0) && (active) {
-            active = false;
-            trigger();       
-        } 
+        if (time_remaining > 0) {
+            time_remaining -= argument_count == 1 ? argument[0] : 1;
+            if (time_remaining <= 0) {
+                alarm_event();       
+            } 
+        }
     }
     
 }
@@ -60,7 +69,7 @@ function alarm_group() constructor {
             }
         }
         if (_pos != -1) {
-            var _new_array = array_create(alarm_amount - 1);
+            var _new_array = array_create(--alarm_amount);
             for (var i = 0; i < (alarm_amount - 1); i += 1) {
                 if (i < _pos) {
                     _new_array[i] = alarm_array[i];
@@ -70,7 +79,6 @@ function alarm_group() constructor {
             }
             alarm_array = _new_array;
         }
-        alarm_amount--;
         return _alarm;
     }
 

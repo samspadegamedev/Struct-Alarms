@@ -6,7 +6,7 @@ my_alarm_group = new alarm_group();
 
 my_hello_alarm = new alarm_struct(room_speed, function() {
     show_debug_message("Hello World");
-    my_hello_alarm.set();
+    my_hello_alarm.set(irandom_range(room_speed, room_speed * 3));
 });
 my_hello_alarm.set();
 
